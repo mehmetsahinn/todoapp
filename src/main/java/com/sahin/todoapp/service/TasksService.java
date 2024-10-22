@@ -20,13 +20,14 @@ public class TasksService {
         return tasksRepository.findAll();
     }
 
+    public Optional<Tasks> getTasksById(Long taskId) {
+        return tasksRepository.findById(taskId);
+    }
+
     public Tasks createTasks(Tasks tasks) {
         return tasksRepository.save(tasks);
     }
 
-    public Optional <Tasks> getTasksById(Long taskId){
-        return  tasksRepository.findById(taskId);
-    }
     public Tasks updateTasks(Long id, Tasks updatedTasks) {
         if (tasksRepository.existsById(id)) {
             updatedTasks.setId(id);
@@ -35,19 +36,27 @@ public class TasksService {
             return null;
         }
     }
-    public Boolean deleteTasks (long id){
-        if (tasksRepository.existsById(id)) {
-            tasksRepository.deleteById(id);
-            System.out.println("Task silindi: ID = " + id);
-            return true;
-        }else {
-        System.out.println("Task bulunamadı: ID = " + id);
-        return false;
+
+    public Tasks taskDone(Long id) {
+        Optional<Tasks> optionalTask = tasksRepository.findById(id);
+        if (optionalTask.isPresent()) {
+            //optionalTask.setStatus(true);
+            Tasks task = optionalTask.get();
+            task.setStatus(true);
+            return tasksRepository.save(task);
+        }
+        return null;
     }
 
+
+
+            public Boolean deleteTasks ( long id){
+            if (tasksRepository.existsById(id)) {
+                tasksRepository.deleteById(id);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
-
-
-
-}
 

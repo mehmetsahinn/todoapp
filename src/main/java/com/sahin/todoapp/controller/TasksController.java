@@ -62,7 +62,7 @@ public class TasksController {
     }
 
     @PutMapping("/{id}")
-    @GetMapping("/{id}")
+   // @GetMapping("/{id}")
     @Operation(
             description = "Update task by id",
             responses = {
@@ -79,6 +79,23 @@ public class TasksController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PutMapping("/{id}/done")
+    @Operation(
+            description = "Task done",
+            responses = {
+                    @ApiResponse(responseCode = "500",ref = "internalServerError"),
+                    @ApiResponse(responseCode = "200",ref = "successfulResponse")
+            }
+    )
+    public ResponseEntity<Tasks> taskDone(@PathVariable Long id) {
+        Tasks tasks = tasksService.taskDone(id);
+        if (tasks != null) {
+            return ResponseEntity.ok(tasks);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @DeleteMapping("/{id}")
     @Operation(
@@ -93,7 +110,6 @@ public class TasksController {
         if (isDeleted) {
             return new ResponseEntity<>("Task silindi: ID = " + id, HttpStatus.OK);
         } else {
-            // ID bulunamadıysa 404 NOT FOUND döner
             return new ResponseEntity<>("Task bulunamadı: ID = " + id, HttpStatus.NOT_FOUND);
         }
     }

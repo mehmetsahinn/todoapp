@@ -1,15 +1,14 @@
 package com.sahin.todoapp.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Getter
+@Setter
 public class Tasks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,4 +16,5 @@ public class Tasks {
     private String task_name;
     @Column(nullable = false)
     private Boolean status= false;
+    private String description=null;
 }

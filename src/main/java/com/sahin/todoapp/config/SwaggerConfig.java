@@ -40,7 +40,7 @@ public class SwaggerConfig {
 
 
         Components components = new Components();
-        components.addResponses("badRequest",badRequest);g
+        components.addResponses("badRequest",badRequest);
         components.addResponses("internalServerError",internalServerError);
         components.addResponses("successfulResponse",successfulResponse);
 
