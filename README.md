@@ -20,10 +20,10 @@ Basit bir yapılacaklar listesi (To-Do List) uygulaması. Kullanıcılar görev 
 - Lombok
 - Swagger
 
-## 🤝 Katkıda Bulunma
 
-1. Bu repoyu fork’layın
-2. Yeni bir branch oluşturun:
+## 🛠️ Kurulum
+
+1. Bu projeyi klonlayın:
 
 ```bash
 git checkout -b ozellik-adi
