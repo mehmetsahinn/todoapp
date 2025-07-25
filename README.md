@@ -26,14 +26,6 @@ Basit bir yapılacaklar listesi (To-Do List) uygulaması. Kullanıcılar görev 
 1. Bu projeyi klonlayın:
 
 ```bash
-git checkout -b ozellik-adi
-
-
-## 🛠️ Kurulum
-
-### 1. Bu projeyi klonlayın:
-
-```bash
 git clone https://github.com/kullaniciadi/TodoApp.git
 cd TodoApp
 
