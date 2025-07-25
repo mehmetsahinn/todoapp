@@ -59,6 +59,31 @@ Basit bir yapılacaklar listesi (To-Do List) uygulaması. Kullanıcılar görev 
     ./mvnw spring-boot:run
     ```
 
+Alternatif olarak `TodoAppApplication.java` dosyasını bir IDE üzerinden de çalıştırabilirsiniz.
+
+## 🤝 Katkıda Bulunma
+
+1. Bu repoyu fork’layın  
+2. Yeni bir branch oluşturun:
+
+    ```bash
+    git checkout -b ozellik-adi
+    ```
+
+3. Değişiklikleri commit edin:
+
+    ```bash
+    git commit -m "Yeni özellik eklendi"
+    ```
+
+4. Branch'i push edin:
+
+    ```bash
+    git push origin ozellik-adi
+    ```
+
+5. Pull request oluşturun
+
 
 
 
