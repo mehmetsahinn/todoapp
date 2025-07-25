@@ -31,11 +31,13 @@ git checkout -b ozellik-adi
 
 ## 🛠️ Kurulum
 
-1. Bu projeyi klonlayın:
+###1. Bu projeyi klonlayın:
 
 ```bash
 git clone https://github.com/kullaniciadi/TodoApp.git
 cd TodoApp
+
+###2. MySQL veritabanını oluşturun (MySQL Workbench veya terminal üzerinden):
 
 CREATE DATABASE todo_db;
 
