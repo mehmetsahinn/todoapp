@@ -1,7 +1,6 @@
 # TodoApp
 
 Spring Boot ile yapılacaklar listesi (To-Do List) uygulaması geliştirdim. Kullanıcılar görev ekleyebilir, güncelleyebilir ve silebilir.
-Spring Boot ile görev ekleme, güncelleme ve silme özelliklerini içeren basit bir görev yönetim uygulaması geliştirdim
 
 ## 🚀 Özellikler
 
