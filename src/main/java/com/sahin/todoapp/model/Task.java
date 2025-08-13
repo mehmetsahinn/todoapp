@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Tasks {
+public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

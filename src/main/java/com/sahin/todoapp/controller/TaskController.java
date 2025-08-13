@@ -1,7 +1,6 @@
 package com.sahin.todoapp.controller;
-import com.sahin.todoapp.service.TasksService;
-import com.sahin.todoapp.model.Tasks;
-import com.sahin.todoapp.repository.TasksRepository;
+import com.sahin.todoapp.service.TaskService;
+import com.sahin.todoapp.model.Task;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,9 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tasks")
-public class TasksController {
+public class TaskController {
     @Autowired
-    private TasksService tasksService;
+    private TaskService taskService;
 
     @GetMapping
     @Operation(
@@ -28,8 +27,8 @@ public class TasksController {
                     @ApiResponse(responseCode = "200",ref = "successfulResponse")
             }
     )
-    public List<Tasks> getAllTasks() {
-        return tasksService.getAllTasks();
+    public List<Task> getAllTasks() {
+        return taskService.getAllTasks();
     }
 
     @GetMapping("/{id}")
@@ -41,8 +40,8 @@ public class TasksController {
                     @ApiResponse(responseCode = "200",ref = "successfulResponse")
             }
     )
-    public ResponseEntity<Tasks> getTasksById(@PathVariable Long id) {
-        Optional<Tasks> tasks = tasksService.getTasksById(id);
+    public ResponseEntity<Task> getTasksById(@PathVariable Long id) {
+        Optional<Task> tasks = taskService.getTaskById(id);
         return tasks.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -56,8 +55,8 @@ public class TasksController {
                     @ApiResponse(responseCode = "200",ref = "successfulResponse")
             }
     )
-    public ResponseEntity<Tasks> createTasks(@RequestBody Tasks tasks) {
-        Tasks savedTasks = tasksService.createTasks(tasks);
+    public ResponseEntity<Task> createTasks(@RequestBody Task tasks) {
+        Task savedTasks = taskService.createTask(tasks);
         return new ResponseEntity<>(savedTasks, HttpStatus.CREATED);
     }
 
@@ -73,8 +72,8 @@ public class TasksController {
                             = "200",ref = "successfulResponse")
             }
     )
-    public ResponseEntity<Tasks> updateTasks(@PathVariable Long id, @RequestBody Tasks updatedTasks) {
-        Tasks tasks = tasksService.updateTasks(id, updatedTasks);
+    public ResponseEntity<Task> updateTasks(@PathVariable Long id, @RequestBody Task updatedTasks) {
+        Task tasks = taskService.updateTask(id, updatedTasks);
         if (tasks != null) {
             return ResponseEntity.ok(tasks);
         } else {
@@ -89,8 +88,8 @@ public class TasksController {
                     @ApiResponse(responseCode = "200",ref = "successfulResponse")
             }
     )
-    public ResponseEntity<Tasks> taskDone(@PathVariable Long id) {
-        Tasks tasks = tasksService.taskDone(id);
+    public ResponseEntity<Task> taskDone(@PathVariable Long id) {
+        Task tasks = taskService.taskDone(id);
         if (tasks != null) {
             return ResponseEntity.ok(tasks);
         } else {
@@ -108,7 +107,7 @@ public class TasksController {
             }
     )
     public ResponseEntity<String> deleteTask(@PathVariable Long id) {
-        boolean isDeleted = tasksService.deleteTasks(id);
+        boolean isDeleted = taskService.deleteTask(id);
         if (isDeleted) {
             return new ResponseEntity<>("Kullanıcı silindi ID = " + id, HttpStatus.OK);
         } else {
