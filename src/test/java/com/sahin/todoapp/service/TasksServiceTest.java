@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
@@ -20,6 +22,32 @@ public class TasksServiceTest {
     public void setUp() throws Exception {
         taskRepository = Mockito.mock(TaskRepository.class);
         taskService = new TaskService(taskRepository);
+    }
+
+    @Test
+    public void whenGetAllTasks_ShouldReturnAllTasks() {
+        // Arrange: test verisi oluştur
+        Task task1 = Task.builder()
+                .id(1L)
+                .taskName("Task 1")
+                .status(false)
+                .description("Desc 1")
+                .build();
+
+        Task task2 = Task.builder()
+                .id(2L)
+                .taskName("Task 2")
+                .status(true)
+                .description("Desc 2")
+                .build();
+
+        List<Task> taskList = Arrays.asList(task1, task2);
+        when(taskRepository.findAll()).thenReturn(taskList);
+        List<Task> result = taskService.getAllTasks();
+
+        assertEquals(2, result.size());
+        assertEquals("Task 1", result.get(0).getTaskName());
+        assertEquals("Task 2", result.get(1).getTaskName());
     }
 
     @Test
