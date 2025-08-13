@@ -3,18 +3,18 @@ package com.sahin.todoapp.service;
 import com.sahin.todoapp.model.Tasks;
 import com.sahin.todoapp.repository.TasksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class TasksService {
-    @Autowired
-    private TasksRepository tasksRepository;
+    private final TasksRepository tasksRepository;
+
+    public TasksService(TasksRepository tasksRepository) {
+        this.tasksRepository = tasksRepository;
+    }
 
     public List<Tasks> getAllTasks() {
         return tasksRepository.findAll();
@@ -47,8 +47,6 @@ public class TasksService {
         }
         return null;
     }
-
-
 
             public Boolean deleteTasks ( long id){
             if (tasksRepository.existsById(id)) {
