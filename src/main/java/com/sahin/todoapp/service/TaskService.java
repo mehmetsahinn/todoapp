@@ -39,7 +39,6 @@ public class TaskService {
     public Task taskDone(Long id) {
         Optional<Task> optionalTask = taskRepository.findById(id);
         if (optionalTask.isPresent()) {
-            //optionalTask.setStatus(true);
             Task task = optionalTask.get();
             task.setStatus(true);
             return taskRepository.save(task);

@@ -5,6 +5,8 @@ import com.sahin.todoapp.repository.TaskRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.never;
@@ -90,6 +92,26 @@ public class TasksServiceTest {
         when(taskRepository.findById(2L)).thenReturn(Optional.empty());
         Optional<Task> result = taskService.getTaskById(2L);
         assertEquals(false, result.isPresent());
+    }
+
+    @Test
+    public void whenTaskDone_TaskExists_ShouldSetStatusTrueAndSave() {
+        when(taskRepository.findById(1L)).thenReturn(Optional.of(sampleTask1));
+        when(taskRepository.save(sampleTask1)).thenReturn(sampleTask1);
+        Task result = taskService.taskDone(1L);
+
+        assertEquals(true, result.getStatus());
+        verify(taskRepository, times(1)).save(sampleTask1);
+    }
+
+    @Test
+    public void whenTaskDone_TaskNotFound_ShouldReturnNull() {
+        Long taskId = 2L;
+        when(taskRepository.findById(taskId)).thenReturn(Optional.empty());
+        Task result = taskService.taskDone(taskId);
+
+        assertEquals(null, result);
+        verify(taskRepository, never()).save(any(Task.class));
     }
 
     @Test
