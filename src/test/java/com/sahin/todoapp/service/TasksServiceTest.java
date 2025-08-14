@@ -7,44 +7,47 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
-
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+
 
 
 public class TasksServiceTest {
 
     private TaskService taskService;
     private TaskRepository taskRepository;
+    private Task sampleTask1;
+    private Task sampleTask2;
 
     @Before
     public void setUp() throws Exception {
         taskRepository = Mockito.mock(TaskRepository.class);
         taskService = new TaskService(taskRepository);
-    }
 
-    @Test
-    public void whenGetAllTasks_shouldReturnAllTasks() {
-        // Arrange: test verisi oluştur
-        Task task1 = Task.builder()
+        sampleTask1 = Task.builder()
                 .id(1L)
                 .taskName("Task 1")
                 .status(false)
                 .description("Desc 1")
                 .build();
 
-        Task task2 = Task.builder()
+        sampleTask2 = Task.builder()
                 .id(2L)
                 .taskName("Task 2")
                 .status(true)
                 .description("Desc 2")
                 .build();
+    }
 
-        List<Task> taskList = Arrays.asList(task1, task2);
+
+    @Test
+    public void whenGetAllTasks_shouldReturnAllTasks() {
+        List<Task> taskList = Arrays.asList(sampleTask1, sampleTask2);
         when(taskRepository.findAll()).thenReturn(taskList);
         List<Task> result = taskService.getAllTasks();
 
@@ -55,21 +58,12 @@ public class TasksServiceTest {
 
     @Test
     public void whenCreateTask_itShouldReturnTask(){
-        Task inputTask= Task.builder()
-                .taskName("taskName")
-                .description("Description").build();
-
-        Task savedTask = Task.builder()
-                .id(1l)
-                .taskName("taskName")
-                .description("Description").build();
-
-        when(taskRepository.save(inputTask)).thenReturn(savedTask);
-        Task result = taskService.createTask(inputTask);
+        when(taskRepository.save(sampleTask1)).thenReturn(sampleTask1);
+        Task result = taskService.createTask(sampleTask1);
 
         assertEquals(Long.valueOf(1L), result.getId());
-        assertEquals("taskName", result.getTaskName());
-        assertEquals("Description", result.getDescription());
+        assertEquals("Task 11", result.getTaskName());
+        assertEquals("Desc 1", result.getDescription());
     }
 
     @Test
@@ -112,6 +106,16 @@ public class TasksServiceTest {
         Boolean result = taskService.deleteTask(taskId);
         assertEquals(true, result);
         verify(taskRepository, times(1)).deleteById(taskId); // deleteById çağrıldı mı kontrol
+    }
+
+    @Test
+    public void whenDeleteTask_TaskNotFound_ShouldReturnFalse() {
+        long taskId = 2L;
+        when(taskRepository.findById(taskId)).thenReturn(Optional.empty());
+        Boolean result = taskService.deleteTask(taskId);
+
+        assertEquals(false, result);
+        verify(taskRepository, never()).deleteById(anyLong());
     }
 
 
