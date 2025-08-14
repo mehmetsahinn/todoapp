@@ -5,6 +5,8 @@ import com.sahin.todoapp.repository.TaskRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
+
 
 public class TasksServiceTest {
 
@@ -25,7 +28,7 @@ public class TasksServiceTest {
     }
 
     @Test
-    public void whenGetAllTasks_ShouldReturnAllTasks() {
+    public void whenGetAllTasks_shouldReturnAllTasks() {
         // Arrange: test verisi oluştur
         Task task1 = Task.builder()
                 .id(1L)
@@ -63,6 +66,7 @@ public class TasksServiceTest {
 
         when(taskRepository.save(inputTask)).thenReturn(savedTask);
         Task result = taskService.createTask(inputTask);
+
         assertEquals(Long.valueOf(1L), result.getId());
         assertEquals("taskName", result.getTaskName());
         assertEquals("Description", result.getDescription());
@@ -78,7 +82,6 @@ public class TasksServiceTest {
                 .build();
 
         when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
-
         Optional<Task> result = taskService.getTaskById(1L);
 
         assertEquals(true, result.isPresent());
@@ -93,6 +96,22 @@ public class TasksServiceTest {
         when(taskRepository.findById(2L)).thenReturn(Optional.empty());
         Optional<Task> result = taskService.getTaskById(2L);
         assertEquals(false, result.isPresent());
+    }
+
+    @Test
+    public void whenDeleteTask_TaskExists_ShouldReturnTrue() {
+        long taskId = 1L;
+        Task task = Task.builder()
+                .id(taskId)
+                .taskName("Sample Task")
+                .status(false)
+                .description("Desc")
+                .build();
+
+        when(taskRepository.findById(taskId)).thenReturn(Optional.of(task));
+        Boolean result = taskService.deleteTask(taskId);
+        assertEquals(true, result);
+        verify(taskRepository, times(1)).deleteById(taskId); // deleteById çağrıldı mı kontrol
     }
 
 

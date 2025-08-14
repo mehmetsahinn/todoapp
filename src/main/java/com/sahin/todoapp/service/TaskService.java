@@ -48,12 +48,13 @@ public class TaskService {
     }
 
             public Boolean deleteTask(long id){
-            if (taskRepository.existsById(id)) {
-                taskRepository.deleteById(id);
-                return true;
-            } else {
-                return false;
-            }
+            return taskRepository.findById(id)
+                    .map(task -> {
+                        taskRepository.deleteById(id);
+                        return true;
+                    })
+                    .orElse(false);
         }
+
     }
 
