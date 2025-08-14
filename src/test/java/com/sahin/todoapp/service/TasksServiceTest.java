@@ -23,6 +23,7 @@ public class TasksServiceTest {
     private TaskRepository taskRepository;
     private Task sampleTask1;
     private Task sampleTask2;
+    private Task sampleTask3;
 
     @Before
     public void setUp() throws Exception {
@@ -42,8 +43,14 @@ public class TasksServiceTest {
                 .status(true)
                 .description("Desc 2")
                 .build();
-    }
 
+        sampleTask3 = Task.builder()
+                .id(3L)
+                .taskName("Task 3")
+                .status(true)
+                .description("Desc 3")
+                .build();
+    }
 
     @Test
     public void whenGetAllTasks_shouldReturnAllTasks() {
@@ -62,27 +69,20 @@ public class TasksServiceTest {
         Task result = taskService.createTask(sampleTask1);
 
         assertEquals(Long.valueOf(1L), result.getId());
-        assertEquals("Task 11", result.getTaskName());
+        assertEquals("Task 1", result.getTaskName());
         assertEquals("Desc 1", result.getDescription());
     }
 
     @Test
     public void whenGetTasksById_Found() {
-        Task task = Task.builder()
-                .id(1L)
-                .taskName("Test Task")
-                .status(false)
-                .description("Sample description")
-                .build();
-
-        when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
+        when(taskRepository.findById(1L)).thenReturn(Optional.of(sampleTask1));
         Optional<Task> result = taskService.getTaskById(1L);
 
         assertEquals(true, result.isPresent());
         assertEquals(Long.valueOf(1L), result.get().getId());
-        assertEquals("Test Task", result.get().getTaskName());
+        assertEquals("Task 1", result.get().getTaskName());
         assertEquals(false, result.get().getStatus());
-        assertEquals("Sample description", result.get().getDescription());
+        assertEquals("Desc 1", result.get().getDescription());
     }
 
     @Test
@@ -94,18 +94,10 @@ public class TasksServiceTest {
 
     @Test
     public void whenDeleteTask_TaskExists_ShouldReturnTrue() {
-        long taskId = 1L;
-        Task task = Task.builder()
-                .id(taskId)
-                .taskName("Sample Task")
-                .status(false)
-                .description("Desc")
-                .build();
-
-        when(taskRepository.findById(taskId)).thenReturn(Optional.of(task));
-        Boolean result = taskService.deleteTask(taskId);
+        when(taskRepository.findById(1L)).thenReturn(Optional.of(sampleTask1));
+        Boolean result = taskService.deleteTask(1l);
         assertEquals(true, result);
-        verify(taskRepository, times(1)).deleteById(taskId); // deleteById çağrıldı mı kontrol
+        verify(taskRepository, times(1)).deleteById(1l);
     }
 
     @Test
@@ -117,7 +109,4 @@ public class TasksServiceTest {
         assertEquals(false, result);
         verify(taskRepository, never()).deleteById(anyLong());
     }
-
-
-
 }
