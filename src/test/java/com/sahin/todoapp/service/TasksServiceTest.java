@@ -95,6 +95,26 @@ public class TasksServiceTest {
     }
 
     @Test
+    public void updateTask_shouldUpdateAndReturnTask_whenTaskExists() {
+        // Arrange
+        Long id = 1L;
+        Task updatedTask = new Task();
+        updatedTask.setTaskName("Updated name");
+
+        when(taskRepository.existsById(id)).thenReturn(true);
+        when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act
+        Task result = taskService.updateTask(id, updatedTask);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(id, result.getId());
+        assertEquals("Updated name", result.getTaskName());
+        verify(taskRepository, times(1)).save(updatedTask);
+    }
+
+    @Test
     public void whenTaskDone_TaskExists_ShouldSetStatusTrueAndSave() {
         when(taskRepository.findById(1L)).thenReturn(Optional.of(sampleTask1));
         when(taskRepository.save(sampleTask1)).thenReturn(sampleTask1);
