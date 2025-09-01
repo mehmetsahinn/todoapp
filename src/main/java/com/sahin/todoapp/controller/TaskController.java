@@ -22,9 +22,9 @@ public class TaskController {
     @Operation(
             description = "Get all tasks",
             responses = {
-                    @ApiResponse(responseCode = "400",ref = "badRequest"),
-                    @ApiResponse(responseCode = "500",ref = "internalServerError"),
-                    @ApiResponse(responseCode = "200",ref = "successfulResponse")
+                    @ApiResponse(responseCode = "400", ref = "badRequest"),
+                    @ApiResponse(responseCode = "500", ref = "internalServerError"),
+                    @ApiResponse(responseCode = "200", ref = "successfulResponse")
             }
     )
     public List<Task> getAllTasks() {
@@ -35,9 +35,9 @@ public class TaskController {
     @Operation(
             description = "Get task by id",
             responses = {
-                    @ApiResponse(responseCode = "400",ref = "badRequest"),
-                    @ApiResponse(responseCode = "500",ref = "internalServerError"),
-                    @ApiResponse(responseCode = "200",ref = "successfulResponse")
+                    @ApiResponse(responseCode = "400", ref = "badRequest"),
+                    @ApiResponse(responseCode = "500", ref = "internalServerError"),
+                    @ApiResponse(responseCode = "200", ref = "successfulResponse")
             }
     )
     public ResponseEntity<Task> getTasksById(@PathVariable Long id) {
@@ -50,9 +50,9 @@ public class TaskController {
     @Operation(
             description = "Create new task",
             responses = {
-                    @ApiResponse(responseCode = "400",ref = "badRequest"),
-                    @ApiResponse(responseCode = "500",ref = "internalServerError"),
-                    @ApiResponse(responseCode = "200",ref = "successfulResponse")
+                    @ApiResponse(responseCode = "400", ref = "badRequest"),
+                    @ApiResponse(responseCode = "500", ref = "internalServerError"),
+                    @ApiResponse(responseCode = "200", ref = "successfulResponse")
             }
     )
     public ResponseEntity<Task> createTasks(@RequestBody Task tasks) {
@@ -65,11 +65,11 @@ public class TaskController {
             description = "Update task by id",
             responses = {
                     @ApiResponse(responseCode
-                            = "400",ref = "badRequest"),
+                            = "400", ref = "badRequest"),
                     @ApiResponse(responseCode
-                            = "500",ref = "internalServerError"),
+                            = "500", ref = "internalServerError"),
                     @ApiResponse(responseCode
-                            = "200",ref = "successfulResponse")
+                            = "200", ref = "successfulResponse")
             }
     )
     public ResponseEntity<Task> updateTasks(@PathVariable Long id, @RequestBody Task updatedTasks) {
@@ -80,12 +80,13 @@ public class TaskController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PutMapping("/{id}/done")
     @Operation(
             description = "Task done",
             responses = {
-                    @ApiResponse(responseCode = "500",ref = "internalServerError"),
-                    @ApiResponse(responseCode = "200",ref = "successfulResponse")
+                    @ApiResponse(responseCode = "500", ref = "internalServerError"),
+                    @ApiResponse(responseCode = "200", ref = "successfulResponse")
             }
     )
     public ResponseEntity<Task> taskDone(@PathVariable Long id) {
@@ -102,8 +103,8 @@ public class TaskController {
     @Operation(
             description = "Delete task by id",
             responses = {
-                    @ApiResponse(responseCode = "400",ref = "badRequest"),
-                    @ApiResponse(responseCode = "500",ref = "internalServerError")
+                    @ApiResponse(responseCode = "400", ref = "badRequest"),
+                    @ApiResponse(responseCode = "500", ref = "internalServerError")
             }
     )
     public ResponseEntity<String> deleteTask(@PathVariable Long id) {

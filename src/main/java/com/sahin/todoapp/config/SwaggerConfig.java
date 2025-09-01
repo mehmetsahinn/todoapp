@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class SwaggerConfig {
 
     @Bean
-    public OpenAPI basedOpenAPI (){
+    public OpenAPI basedOpenAPI() {
 
         ApiResponse badRequest = new ApiResponse().content(
                 new Content().addMediaType("application/json",
@@ -40,9 +40,9 @@ public class SwaggerConfig {
 
 
         Components components = new Components();
-        components.addResponses("badRequest",badRequest);
-        components.addResponses("internalServerError",internalServerError);
-        components.addResponses("successfulResponse",successfulResponse);
+        components.addResponses("badRequest", badRequest);
+        components.addResponses("internalServerError", internalServerError);
+        components.addResponses("successfulResponse", successfulResponse);
 
 
         return new OpenAPI().components(components).info(new Info().title("To Do Application")

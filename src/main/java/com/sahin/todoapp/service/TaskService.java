@@ -49,14 +49,14 @@ public class TaskService {
         return null;
     }
 
-            public Boolean deleteTask(long id){
-            return taskRepository.findById(id)
-                    .map(task -> {
-                        taskRepository.deleteById(id);
-                        return true;
-                    })
-                    .orElse(false);
-        }
-
+    public Boolean deleteTask(long id) {
+        return taskRepository.findById(id)
+                .map(task -> {
+                    taskRepository.deleteById(id);
+                    return true;
+                })
+                .orElse(false);
     }
+
+}
 

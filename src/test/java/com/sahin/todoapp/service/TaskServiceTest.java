@@ -12,11 +12,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.when;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import static org.junit.Assert.*;
 
+import static org.junit.Assert.*;
 
 
 public class TaskServiceTest {
@@ -66,7 +67,7 @@ public class TaskServiceTest {
     }
 
     @Test
-    public void whenCreateTask_itShouldReturnTask(){
+    public void whenCreateTask_itShouldReturnTask() {
         when(taskRepository.save(sampleTask1)).thenReturn(sampleTask1);
         Task result = taskService.createTask(sampleTask1);
 
