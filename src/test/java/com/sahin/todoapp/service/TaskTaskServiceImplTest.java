@@ -2,6 +2,7 @@ package com.sahin.todoapp.service;
 
 import com.sahin.todoapp.model.Task;
 import com.sahin.todoapp.repository.TaskRepository;
+import com.sahin.todoapp.service.serviceImpl.TaskServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -20,9 +21,9 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 
 
-public class TaskServiceTest {
+public class TaskTaskServiceImplTest {
 
-    private TaskService taskService;
+    private TaskServiceImpl taskServiceImpl;
     private TaskRepository taskRepository;
     private Task sampleTask1;
     private Task sampleTask2;
@@ -31,7 +32,7 @@ public class TaskServiceTest {
     @Before
     public void setUp() throws Exception {
         taskRepository = Mockito.mock(TaskRepository.class);
-        taskService = new TaskService(taskRepository);
+        taskServiceImpl = new TaskServiceImpl(taskRepository);
 
         sampleTask1 = Task.builder()
                 .id(1L)
@@ -59,7 +60,7 @@ public class TaskServiceTest {
     public void whenGetAllTasks_shouldReturnAllTasks() {
         List<Task> taskList = Arrays.asList(sampleTask1, sampleTask2);
         when(taskRepository.findAll()).thenReturn(taskList);
-        List<Task> result = taskService.getAllTasks();
+        List<Task> result = taskServiceImpl.getAllTasks();
 
         assertEquals(2, result.size());
         assertEquals("Task 1", result.get(0).getTaskName());
@@ -69,7 +70,7 @@ public class TaskServiceTest {
     @Test
     public void whenCreateTask_itShouldReturnTask() {
         when(taskRepository.save(sampleTask1)).thenReturn(sampleTask1);
-        Task result = taskService.createTask(sampleTask1);
+        Task result = taskServiceImpl.createTask(sampleTask1);
 
         assertEquals(Long.valueOf(1L), result.getId());
         assertEquals("Task 1", result.getTaskName());
@@ -79,7 +80,7 @@ public class TaskServiceTest {
     @Test
     public void whenGetTasksById_Found() {
         when(taskRepository.findById(1L)).thenReturn(Optional.of(sampleTask1));
-        Optional<Task> result = taskService.getTaskById(1L);
+        Optional<Task> result = taskServiceImpl.getTaskById(1L);
 
         assertEquals(true, result.isPresent());
         assertEquals(Long.valueOf(1L), result.get().getId());
@@ -91,7 +92,7 @@ public class TaskServiceTest {
     @Test
     public void whenGetTasksById_NotFound() {
         when(taskRepository.findById(2L)).thenReturn(Optional.empty());
-        Optional<Task> result = taskService.getTaskById(2L);
+        Optional<Task> result = taskServiceImpl.getTaskById(2L);
         assertEquals(false, result.isPresent());
     }
 
@@ -110,7 +111,7 @@ public class TaskServiceTest {
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(existingTask));
         when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Task result = taskService.updateTask(taskId, updatedTask);
+        Task result = taskServiceImpl.updateTask(taskId, updatedTask);
 
         assertEquals("New Name", result.getTaskName());
         assertEquals("Old Description", result.getDescription());
@@ -132,7 +133,7 @@ public class TaskServiceTest {
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(existingTask));
         when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Task result = taskService.updateTask(taskId, updatedTask);
+        Task result = taskServiceImpl.updateTask(taskId, updatedTask);
 
         assertEquals("Old Name", result.getTaskName());
         assertEquals("New Description", result.getDescription());
@@ -154,7 +155,7 @@ public class TaskServiceTest {
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(existingTask));
         when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Task result = taskService.updateTask(taskId, updatedTask);
+        Task result = taskServiceImpl.updateTask(taskId, updatedTask);
 
         assertEquals("Old Name", result.getTaskName());
         assertEquals("Old Description", result.getDescription());
@@ -178,7 +179,7 @@ public class TaskServiceTest {
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(existingTask));
         when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Task result = taskService.updateTask(taskId, updatedTask);
+        Task result = taskServiceImpl.updateTask(taskId, updatedTask);
 
         assertEquals("New Name", result.getTaskName());
         assertEquals("New Description", result.getDescription());
@@ -201,7 +202,7 @@ public class TaskServiceTest {
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(existingTask));
         when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Task result = taskService.updateTask(taskId, updatedTask);
+        Task result = taskServiceImpl.updateTask(taskId, updatedTask);
 
         assertEquals("New Name", result.getTaskName());
         assertEquals("Old Description", result.getDescription());
@@ -224,7 +225,7 @@ public class TaskServiceTest {
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(existingTask));
         when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Task result = taskService.updateTask(taskId, updatedTask);
+        Task result = taskServiceImpl.updateTask(taskId, updatedTask);
 
         assertEquals("New Name", result.getTaskName());
         assertEquals("New Description", result.getDescription());
@@ -247,7 +248,7 @@ public class TaskServiceTest {
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(existingTask));
         when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Task result = taskService.updateTask(taskId, updatedTask);
+        Task result = taskServiceImpl.updateTask(taskId, updatedTask);
 
         assertEquals("Old Name", result.getTaskName());
         assertEquals("New Description", result.getDescription());
@@ -261,7 +262,7 @@ public class TaskServiceTest {
         updatedTask.setTaskName("New Name");
 
         when(taskRepository.findById(taskId)).thenReturn(Optional.empty());
-        Task result = taskService.updateTask(taskId, updatedTask);
+        Task result = taskServiceImpl.updateTask(taskId, updatedTask);
 
         assertNull(result);
         verify(taskRepository, never()).save(any(Task.class)); // save hiç çağrılmamalı
@@ -272,7 +273,7 @@ public class TaskServiceTest {
     public void whenTaskDone_TaskExists_ShouldSetStatusTrueAndSave() {
         when(taskRepository.findById(1L)).thenReturn(Optional.of(sampleTask1));
         when(taskRepository.save(sampleTask1)).thenReturn(sampleTask1);
-        Task result = taskService.taskDone(1L);
+        Task result = taskServiceImpl.taskDone(1L);
 
         assertEquals(true, result.getStatus());
         verify(taskRepository, times(1)).save(sampleTask1);
@@ -282,7 +283,7 @@ public class TaskServiceTest {
     public void whenTaskDone_TaskNotFound_ShouldReturnNull() {
         Long taskId = 2L;
         when(taskRepository.findById(taskId)).thenReturn(Optional.empty());
-        Task result = taskService.taskDone(taskId);
+        Task result = taskServiceImpl.taskDone(taskId);
 
         assertEquals(null, result);
         verify(taskRepository, never()).save(any(Task.class));
@@ -291,7 +292,7 @@ public class TaskServiceTest {
     @Test
     public void whenDeleteTask_TaskExists_ShouldReturnTrue() {
         when(taskRepository.findById(1L)).thenReturn(Optional.of(sampleTask1));
-        Boolean result = taskService.deleteTask(1l);
+        Boolean result = taskServiceImpl.deleteTask(1l);
         assertEquals(true, result);
         verify(taskRepository, times(1)).deleteById(1l);
     }
@@ -300,7 +301,7 @@ public class TaskServiceTest {
     public void whenDeleteTask_TaskNotFound_ShouldReturnFalse() {
         long taskId = 2L;
         when(taskRepository.findById(taskId)).thenReturn(Optional.empty());
-        Boolean result = taskService.deleteTask(taskId);
+        Boolean result = taskServiceImpl.deleteTask(taskId);
 
         assertEquals(false, result);
         verify(taskRepository, never()).deleteById(anyLong());
