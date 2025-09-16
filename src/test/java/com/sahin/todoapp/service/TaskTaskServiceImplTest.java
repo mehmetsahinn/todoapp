@@ -2,7 +2,7 @@ package com.sahin.todoapp.service;
 
 import com.sahin.todoapp.model.Task;
 import com.sahin.todoapp.repository.TaskRepository;
-import com.sahin.todoapp.service.serviceImpl.TaskServiceImpl;
+import com.sahin.todoapp.service.impl.TaskServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

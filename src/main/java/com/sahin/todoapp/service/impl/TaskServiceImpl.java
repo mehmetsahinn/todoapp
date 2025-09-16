@@ -1,4 +1,4 @@
-package com.sahin.todoapp.service.serviceImpl;
+package com.sahin.todoapp.service.impl;
 
 import com.sahin.todoapp.model.Task;
 import com.sahin.todoapp.repository.TaskRepository;
@@ -24,8 +24,8 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findById(taskId);
     }
 
-    public Task createTask(Task tasks) {
-        return taskRepository.save(tasks);
+    public Task createTask(Task task) {
+        return taskRepository.save(task);
     }
 
     public Task updateTask(Long id, Task updatedTask) {
@@ -49,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
         return null;
     }
 
-    public Boolean deleteTask(long id) {
+    public boolean deleteTask(long id) {
         return taskRepository.findById(id)
                 .map(task -> {
                     taskRepository.deleteById(id);

@@ -1,5 +1,5 @@
 package com.sahin.todoapp.controller;
-import com.sahin.todoapp.service.serviceImpl.TaskServiceImpl;
+import com.sahin.todoapp.service.impl.TaskServiceImpl;
 import com.sahin.todoapp.model.Task;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
