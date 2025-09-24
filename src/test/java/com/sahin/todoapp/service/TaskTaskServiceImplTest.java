@@ -15,6 +15,7 @@ import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,30 +35,15 @@ public class TaskTaskServiceImplTest {
         taskRepository = Mockito.mock(TaskRepository.class);
         taskServiceImpl = new TaskServiceImpl(taskRepository);
 
-        sampleTask1 = Task.builder()
-                .id(1L)
-                .taskName("Task 1")
-                .status(false)
-                .description("Desc 1")
-                .build();
+        sampleTask1 = Task.builder().id(1L).taskName("Task 1").status(false).description("Desc 1").build();
 
-        sampleTask2 = Task.builder()
-                .id(2L)
-                .taskName("Task 2")
-                .status(true)
-                .description("Desc 2")
-                .build();
+        sampleTask2 = Task.builder().id(2L).taskName("Task 2").status(true).description("Desc 2").build();
 
-        sampleTask3 = Task.builder()
-                .id(3L)
-                .taskName("Task 3")
-                .status(true)
-                .description("Desc 3")
-                .build();
+        sampleTask3 = Task.builder().id(3L).taskName("Task 3").status(true).description("Desc 3").build();
     }
 
     @Test
-    public void whenGetAllTasks_shouldReturnAllTasks() {
+    public void should_ReturnAllTasks_When_TasksExist() {
         List<Task> taskList = Arrays.asList(sampleTask1, sampleTask2);
         when(taskRepository.findAll()).thenReturn(taskList);
         List<Task> result = taskServiceImpl.getAllTasks();
@@ -68,7 +54,14 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void whenCreateTask_itShouldReturnTask() {
+    public void should_ReturnEmptyList_When_NoTasksExist() {
+        when(taskRepository.findAll()).thenReturn(Collections.emptyList());
+        List<Task> result = taskServiceImpl.getAllTasks();
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void should_ReturnTask_When_CreateTask() {
         when(taskRepository.save(sampleTask1)).thenReturn(sampleTask1);
         Task result = taskServiceImpl.createTask(sampleTask1);
 
@@ -78,7 +71,7 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void whenGetTasksById_Found() {
+    public void should_ReturnTask_When_GetTasksById_Found() {
         when(taskRepository.findById(1L)).thenReturn(Optional.of(sampleTask1));
         Optional<Task> result = taskServiceImpl.getTaskById(1L);
 
@@ -90,14 +83,14 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void whenGetTasksById_NotFound() {
+    public void should_ReturnFalse_When_GetTasksById_NotFound() {
         when(taskRepository.findById(2L)).thenReturn(Optional.empty());
         Optional<Task> result = taskServiceImpl.getTaskById(2L);
         assertEquals(false, result.isPresent());
     }
 
     @Test
-    public void updateTask_shouldUpdateOnlyName_whenOnlyNameProvided() {
+    public void should_ReturnTaskWithUpdatedName_When_OnlyNameProvided() {
         Long taskId = 1L;
         Task existingTask = new Task();
         existingTask.setId(taskId);
@@ -119,7 +112,7 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void updateTask_shouldUpdateOnlyDescription_whenOnlyDescriptionProvided() {
+    public void should_ReturnTaskWithUpdatedDescription_When_OnlyDescriptionIsProvided() {
         Long taskId = 2L;
         Task existingTask = new Task();
         existingTask.setId(taskId);
@@ -141,7 +134,7 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void updateTask_shouldUpdateOnlyStatus_whenOnlyStatusProvided() {
+    public void should_ReturnTaskWithUpdatedStatus_WhenOnlyStatusProvided() {
         Long taskId = 3L;
         Task existingTask = new Task();
         existingTask.setId(taskId);
@@ -163,7 +156,7 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void updateTask_shouldUpdateAllFields_whenAllFieldsProvided() {
+    public void should_ReturnUpdatedTask_When_AllFieldsProvided() {
         Long taskId = 4L;
         Task existingTask = new Task();
         existingTask.setId(taskId);
@@ -187,7 +180,8 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void updateTask_shouldUpdateNameAndStatus_whenBothProvided() {
+
+    public void should_ReturnTaskWithUpdatedStatusAndName_When_StatusAndNameProvided() {
         Long taskId = 5L;
         Task existingTask = new Task();
         existingTask.setId(taskId);
@@ -210,7 +204,7 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void updateTask_shouldUpdateNameAndDescription_whenBothProvided() {
+    public void should_ReturnTaskWithUpdatedDescriptionAndName_When_DescriptionAndNameProvided() {
         Long taskId = 6L;
         Task existingTask = new Task();
         existingTask.setId(taskId);
@@ -233,7 +227,7 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void updateTask_shouldUpdateDescriptionAndStatus_whenBothProvided() {
+    public void should_ReturnTaskWithUpdatedStatusAndDescription_When_StatusAndDescriptionProvided() {
         Long taskId = 7L;
         Task existingTask = new Task();
         existingTask.setId(taskId);
@@ -256,7 +250,7 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void updateTask_shouldReturnNull_whenTaskNotFound() {
+    public void should_ReturnNull_When_TaskNotFound() {
         Long taskId = 99L;
         Task updatedTask = new Task();
         updatedTask.setTaskName("New Name");
@@ -270,7 +264,7 @@ public class TaskTaskServiceImplTest {
 
 
     @Test
-    public void whenTaskDone_TaskExists_ShouldSetStatusTrueAndSave() {
+    public void should_ReturnTaskWithStatusTrueAndSave_When_TaskExists() {
         when(taskRepository.findById(1L)).thenReturn(Optional.of(sampleTask1));
         when(taskRepository.save(sampleTask1)).thenReturn(sampleTask1);
         Task result = taskServiceImpl.taskDone(1L);
@@ -280,7 +274,7 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void whenTaskDone_TaskNotFound_ShouldReturnNull() {
+    public void should_ReturnNull_When_TaskNotExists() {
         Long taskId = 2L;
         when(taskRepository.findById(taskId)).thenReturn(Optional.empty());
         Task result = taskServiceImpl.taskDone(taskId);
@@ -290,7 +284,8 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void whenDeleteTask_TaskExists_ShouldReturnTrue() {
+
+    public void should_ReturnTrueAndDeleteTask_When_TaskExists() {
         when(taskRepository.findById(1L)).thenReturn(Optional.of(sampleTask1));
         Boolean result = taskServiceImpl.deleteTask(1l);
         assertEquals(true, result);
@@ -298,7 +293,7 @@ public class TaskTaskServiceImplTest {
     }
 
     @Test
-    public void whenDeleteTask_TaskNotFound_ShouldReturnFalse() {
+    public void should_ReturnFalse_When_TaskNotExists() {
         long taskId = 2L;
         when(taskRepository.findById(taskId)).thenReturn(Optional.empty());
         Boolean result = taskServiceImpl.deleteTask(taskId);
