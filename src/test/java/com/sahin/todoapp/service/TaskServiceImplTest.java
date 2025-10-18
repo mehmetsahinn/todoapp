@@ -33,6 +33,7 @@ public class TaskServiceImplTest {
     @Before
     public void setUp() throws Exception {
         taskRepository = Mockito.mock(TaskRepository.class);
+
         taskServiceImpl = new TaskServiceImpl(taskRepository);
 
         sampleTask1 = Task.builder().id(1L).taskName("Task 1").status(false).description("Desc 1").build();
