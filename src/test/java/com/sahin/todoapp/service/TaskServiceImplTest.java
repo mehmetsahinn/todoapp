@@ -22,7 +22,7 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 
 
-public class TaskTaskServiceImplTest {
+public class TaskServiceImplTest {
 
     private TaskServiceImpl taskServiceImpl;
     private TaskRepository taskRepository;
