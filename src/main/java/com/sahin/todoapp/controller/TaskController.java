@@ -1,4 +1,5 @@
 package com.sahin.todoapp.controller;
+import com.sahin.todoapp.service.TaskService;
 import com.sahin.todoapp.service.impl.TaskServiceImpl;
 import com.sahin.todoapp.model.Task;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @RequestMapping("/api/tasks")
 public class TaskController {
     @Autowired
-    private TaskServiceImpl taskServiceImpl;
+    private TaskService taskService;
 
     @GetMapping
     @Operation(
@@ -29,7 +30,7 @@ public class TaskController {
             }
     )
     public List<Task> getAllTasks() {
-        return taskServiceImpl.getAllTasks();
+        return taskService.getAllTasks();
     }
 
     @GetMapping("/{id}")
@@ -42,7 +43,7 @@ public class TaskController {
             }
     )
     public ResponseEntity<Task> getTasksById(@PathVariable Long id) {
-        Optional<Task> tasks = taskServiceImpl.getTaskById(id);
+        Optional<Task> tasks = taskService.getTaskById(id);
         return tasks.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -57,7 +58,7 @@ public class TaskController {
             }
     )
     public ResponseEntity<Task> createTasks(@RequestBody Task tasks) {
-        Task savedTasks = taskServiceImpl.createTask(tasks);
+        Task savedTasks = taskService.createTask(tasks);
         return new ResponseEntity<>(savedTasks, HttpStatus.CREATED);
     }
 
@@ -74,7 +75,7 @@ public class TaskController {
             }
     )
     public ResponseEntity<Task> updateTasks(@PathVariable Long id, @RequestBody Task updatedTasks) {
-        Task tasks = taskServiceImpl.updateTask(id, updatedTasks);
+        Task tasks = taskService.updateTask(id, updatedTasks);
         if (tasks != null) {
             return ResponseEntity.ok(tasks);
         } else {
@@ -91,7 +92,7 @@ public class TaskController {
             }
     )
     public ResponseEntity<Task> taskDone(@PathVariable Long id) {
-        Task tasks = taskServiceImpl.taskDone(id);
+        Task tasks = taskService.taskDone(id);
         if (tasks != null) {
             return ResponseEntity.ok(tasks);
         } else {
@@ -109,7 +110,7 @@ public class TaskController {
             }
     )
     public ResponseEntity<String> deleteTask(@PathVariable Long id) {
-        boolean isDeleted = taskServiceImpl.deleteTask(id);
+        boolean isDeleted = taskService.deleteTask(id);
         if (isDeleted) {
             return new ResponseEntity<>("Kullanıcı silindi ID = " + id, HttpStatus.OK);
         } else {
