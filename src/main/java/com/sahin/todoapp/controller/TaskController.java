@@ -4,6 +4,7 @@ import com.sahin.todoapp.service.impl.TaskServiceImpl;
 import com.sahin.todoapp.model.Task;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +58,7 @@ public class TaskController {
                     @ApiResponse(responseCode = "200", ref = "successfulResponse")
             }
     )
-    public ResponseEntity<Task> createTasks(@RequestBody Task tasks) {
+    public ResponseEntity<Task> createTasks(@Valid @RequestBody Task tasks) {
         Task savedTasks = taskService.createTask(tasks);
         return new ResponseEntity<>(savedTasks, HttpStatus.CREATED);
     }

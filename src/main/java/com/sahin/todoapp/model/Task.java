@@ -1,6 +1,7 @@
 package com.sahin.todoapp.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
@@ -15,6 +16,8 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
+    @NotBlank(message = "Task name cannot be empty")
     private String taskName;
     @Column(nullable = false)
     private Boolean status= false;
