@@ -23,7 +23,7 @@ Spring Boot ile görev ekleme, güncelleme ve silme özelliklerini içeren basit
 ## 🛠️ Kurulum
 1. Bu projeyi klonlayın:
     ```bash
-    git clone https://github.com/kullaniciadi/TodoApp.git
+    git clone https://github.com/mehmetsahinn/TodoApp.git
     cd TodoApp
     ```
 2. MySQL veritabanını oluşturun:
