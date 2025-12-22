@@ -3,6 +3,7 @@ package com.sahin.todoapp.service.impl;
 import com.sahin.todoapp.model.Task;
 import com.sahin.todoapp.repository.TaskRepository;
 import com.sahin.todoapp.service.TaskService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +39,12 @@ public class TaskServiceImpl implements TaskService {
                 Optional.ofNullable(updatedTask.getStatus()).orElse(task.getStatus()));
         return taskRepository.save(task);
     }
+    /*public Task updateTask2(Long id, Task updatedTask) {
+        Task task = taskRepository.findById(id).orElse(null);
+        Task savedTask=new Task();
+        BeanUtils.copyProperties(updatedTask, savedTask);
+        return taskRepository.save(savedTask);
+    }*/
 
     public Task taskDone(Long id) {
         Optional<Task> optionalTask = taskRepository.findById(id);
