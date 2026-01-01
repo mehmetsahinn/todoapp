@@ -39,12 +39,6 @@ public class TaskServiceImpl implements TaskService {
                 Optional.ofNullable(updatedTask.getStatus()).orElse(task.getStatus()));
         return taskRepository.save(task);
     }
-    /*public Task updateTask2(Long id, Task updatedTask) {
-        Task task = taskRepository.findById(id).orElse(null);
-        Task savedTask=new Task();
-        BeanUtils.copyProperties(updatedTask, savedTask);
-        return taskRepository.save(savedTask);
-    }*/
 
     public Task taskDone(Long id) {
         Optional<Task> optionalTask = taskRepository.findById(id);
