@@ -1,8 +1,10 @@
-# TodoApp
+# 📝 TodoApp - Backend (REST API)
 
-Basit bir yapılacaklar listesi (To-Do List) uygulaması. Kullanıcılar görev ekleyebilir, güncelleyebilir ve silebilir.
-Spring Boot ile yapılacaklar listesi (To-Do List) uygulaması geliştirdim. Kullanıcılar görev ekleyebilir, güncelleyebilir ve silebilir.
-Spring Boot ile görev ekleme, güncelleme ve silme özelliklerini içeren basit bir görev yönetim uygulaması geliştirdim
+Bu depo, TodoApp uygulamasının **Spring Boot** ile geliştirilmiş Backend (API) servisidir. Uygulamanın kullanıcı arayüzüne (Frontend) aşağıdaki bağlantıdan ulaşabilirsiniz:
+
+🔗 **Frontend Reposu:** [mehmetsahinn/todo-front](https://github.com/mehmetsahinn/todo-front)
+
+---
 
 ## 🚀 Özellikler
 
@@ -20,6 +22,11 @@ Spring Boot ile görev ekleme, güncelleme ve silme özelliklerini içeren basit
 - Maven
 - Lombok
 - Swagger
+## 🏗️ Sistem Mimarisi
+Uygulama, birbirinden bağımsız çalışan iki farklı katmandan oluşur:
+1. **Backend (Bu Repo):** Port 8080 üzerinde çalışan RESTful servis.
+2. **Frontend:** Port 3000 üzerinde çalışan kullanıcı arayüzü.
+
 ## 🛠️ Kurulum
 1. Bu projeyi klonlayın:
     ```bash
